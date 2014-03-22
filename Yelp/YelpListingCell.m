@@ -7,14 +7,17 @@
 //
 
 #import "YelpListingCell.h"
+#import "UIImageView+AFNetworking.h"
 
 @interface YelpListingCell ()
-@property (weak, nonatomic) IBOutlet UIImageView *mainImage;
-@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
-@property (weak, nonatomic) IBOutlet UILabel *reviewCountLabel;
-@property (weak, nonatomic) IBOutlet UILabel *addressAndNeighborhoodLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *ratingImage;
-@property (weak, nonatomic) IBOutlet UILabel *categoryLabel;
+
+@property (weak, nonatomic) IBOutlet UIImageView *mainImageView;
+@property (weak, nonatomic) IBOutlet UILabel     *indexLabel;
+@property (weak, nonatomic) IBOutlet UILabel     *nameLabel;
+@property (weak, nonatomic) IBOutlet UILabel     *reviewCountLabel;
+@property (weak, nonatomic) IBOutlet UILabel     *addressAndNeighborhoodLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *ratingImageView;
+@property (weak, nonatomic) IBOutlet UILabel     *categoryLabel;
 
 @end
 
@@ -35,10 +38,16 @@
 
 # pragma mark - Public Methods
 - (void)setYelpListing:(YelpListing *)yelpListing {
+    // Sets listing object from cell to a local instance
     _yelpListing = yelpListing;
     
-    self.nameLabel.text = yelpListing.name;
-    self.addressAndNeighborhoodLabel.text = yelpListing.neighborhood;
-    self.reviewCountLabel.text = [NSString stringWithFormat: @"%@", yelpListing.reviewCount];
+    // Sets the cells IU elements from local instance properties
+    self.nameLabel.text                   = yelpListing.name;
+    self.addressAndNeighborhoodLabel.text = [NSString stringWithFormat:@"%@, %@", yelpListing.streetAddress, yelpListing.neighborhood];
+    self.reviewCountLabel.text            = [NSString stringWithFormat: @"%@", yelpListing.reviewCount];
+    self.indexLabel.text                  = yelpListing.index;
+    
+    [self.mainImageView   setImageWithURL: [NSURL URLWithString:yelpListing.listingImageUrl]];
+    [self.ratingImageView setImageWithURL: [NSURL URLWithString:yelpListing.ratingImgUrl]];
 }
 @end

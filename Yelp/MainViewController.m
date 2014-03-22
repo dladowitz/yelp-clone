@@ -41,32 +41,34 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
 
     // Do any additional setup after loading the view from its nib.
     
-    // Sets height of custom cells
-    self.tableView.rowHeight = 150;
+    // tableView settings
+        // Creates Nib for Custom Cell and registers with tableView for reuse
+        UINib *yelpListingCellNib = [UINib nibWithNibName:@"YelpListingCell" bundle:nil];
+        [self.tableView registerNib:yelpListingCellNib forCellReuseIdentifier:@"YelpListingCell"];
+        // Sets height of custom cells
+        self.tableView.rowHeight = 110;
 
-    // Seting dataSource and delegates
-    self.tableView.dataSource = self;
-    self.tableView.delegate   = self;
-    
-    // Creates Nib for Custom Cell and registers with tableView for reuse
-    UINib *yelpListingCellNib = [UINib nibWithNibName:@"YelpListingCell" bundle:nil];
-    [self.tableView registerNib:yelpListingCellNib forCellReuseIdentifier:@"YelpListingCell"];
-    
-    // You can register for Yelp API keys here: http://www.yelp.com/developers/manage_api_keys
-    self.client = [[YelpClient alloc] initWithConsumerKey:kYelpConsumerKey consumerSecret:kYelpConsumerSecret accessToken:kYelpToken accessSecret:kYelpTokenSecret];
-    
-    // Pulling results from Yelp API.
-    [self.client searchWithTerm:@"Thai" success:^(AFHTTPRequestOperation *operation, id response) {
-        // NSLog(@"response: %@", response);
+        // Seting dataSource and delegates for tableView
+        self.tableView.dataSource = self;
+        self.tableView.delegate   = self;
 
-        // Passing API results to the YelpListing model for creation
-        self.yelpListings = [YelpListing yelpListingsWithArray:response[@"businesses"]];
-        [self.tableView reloadData];
-
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"error: %@", [error description]);
-    }];
+    // Navigation Bar Settings
+        
     
+    // Yelp API Settings
+        // You can register for Yelp API keys here: http://www.yelp.com/developers/manage_api_keys
+        self.client = [[YelpClient alloc] initWithConsumerKey:kYelpConsumerKey consumerSecret:kYelpConsumerSecret accessToken:kYelpToken accessSecret:kYelpTokenSecret];
+    
+        // Pulling results from Yelp API.
+        [self.client searchWithTerm:@"Thai" success:^(AFHTTPRequestOperation *operation, id response) {
+            // NSLog(@"response: %@", response);
+            // Passing API results to the YelpListing model for creation
+            self.yelpListings = [YelpListing yelpListingsWithArray:response[@"businesses"]];
+            [self.tableView reloadData];
+
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"error: %@", [error description]);
+        }];
     
 }
 
@@ -80,9 +82,12 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
 // Setting the data on individual cells
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     YelpListingCell *cell = [tableView dequeueReusableCellWithIdentifier:@"YelpListingCell" forIndexPath:indexPath];
-    //    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
     
     YelpListing *listing = self.yelpListings[indexPath.row];
+
+    // Used to set indexLabel to number listings on custom cell
+    listing.index    = [NSString stringWithFormat: @"%i", indexPath.row];
+    
     cell.yelpListing = listing;
     
     return cell;

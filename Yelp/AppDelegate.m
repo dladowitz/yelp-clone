@@ -15,9 +15,15 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
-    self.window.rootViewController = [[MainViewController alloc] init];
+    // Creates HomeViewController
+    MainViewController *mainViewController = [[MainViewController alloc] init];
+                               
+    // Creates Navigation Controller
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:mainViewController];
+    navigationController.navigationBar.barTintColor = [UIColor redColor];
     
-    self.window.backgroundColor = [UIColor whiteColor];
+    self.window.rootViewController = navigationController;
+    
     [self.window makeKeyAndVisible];
     return YES;
 }
