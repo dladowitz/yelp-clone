@@ -9,6 +9,7 @@
 #import "MainViewController.h"
 #import "YelpClient.h"
 #import "YelpListing.h"
+#import "YelpListingCell.h"
 
 NSString * const kYelpConsumerKey = @"vxKwwcR_NMQ7WaEiQBK_CA";
 NSString * const kYelpConsumerSecret = @"33QCvh5bIF5jIHR5klQr7RtBDhQ";
@@ -39,10 +40,17 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
     [super viewDidLoad];
 
     // Do any additional setup after loading the view from its nib.
+    
+    // Sets height of custom cells
+    self.tableView.rowHeight = 150;
 
     // Seting dataSource and delegates
     self.tableView.dataSource = self;
     self.tableView.delegate   = self;
+    
+    // Creates Nib for Custom Cell and registers with tableView for reuse
+    UINib *yelpListingCellNib = [UINib nibWithNibName:@"YelpListingCell" bundle:nil];
+    [self.tableView registerNib:yelpListingCellNib forCellReuseIdentifier:@"YelpListingCell"];
     
     // You can register for Yelp API keys here: http://www.yelp.com/developers/manage_api_keys
     self.client = [[YelpClient alloc] initWithConsumerKey:kYelpConsumerKey consumerSecret:kYelpConsumerSecret accessToken:kYelpToken accessSecret:kYelpTokenSecret];
@@ -58,6 +66,8 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"error: %@", [error description]);
     }];
+    
+    
 }
 
 #pragma mark -Table View Methods
@@ -69,10 +79,11 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
 
 // Setting the data on individual cells
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+    YelpListingCell *cell = [tableView dequeueReusableCellWithIdentifier:@"YelpListingCell" forIndexPath:indexPath];
+    //    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
     
-    YelpListing *currentListing = self.yelpListings[indexPath.row];
-    cell.textLabel.text = [NSString stringWithFormat:@"%@", currentListing.name];
+    YelpListing *listing = self.yelpListings[indexPath.row];
+    cell.yelpListing = listing;
     
     return cell;
 }
