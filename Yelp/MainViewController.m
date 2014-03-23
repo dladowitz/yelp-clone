@@ -45,14 +45,16 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
         // Creates Nib for Custom Cell and registers with tableView for reuse
         UINib *yelpListingCellNib = [UINib nibWithNibName:@"YelpListingCell" bundle:nil];
         [self.tableView registerNib:yelpListingCellNib forCellReuseIdentifier:@"YelpListingCell"];
+    
         // Sets height of custom cells
-        self.tableView.rowHeight = 110;
+            // self.tableView.rowHeight = 130;
 
         // Seting dataSource and delegates for tableView
         self.tableView.dataSource = self;
         self.tableView.delegate   = self;
 
     // Navigation Bar Settings
+    self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
         
     
     // Yelp API Settings
@@ -85,12 +87,33 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
     
     YelpListing *listing = self.yelpListings[indexPath.row];
 
-    // Used to set indexLabel to number listings on custom cell
-    listing.index    = [NSString stringWithFormat: @"%i", indexPath.row];
+    // Used to set search position on listing name
+    NSInteger searchPosition = indexPath.row + 1;
+    listing.index    = [NSString stringWithFormat: @"%i", searchPosition];
     
     cell.yelpListing = listing;
     
     return cell;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    YelpListing *listing = self.yelpListings[indexPath.row];
+    
+    NSString *text = listing.name;
+    UIFont *fontText = [UIFont systemFontOfSize:17.0];
+    CGRect rect = [text boundingRectWithSize:CGSizeMake(165, CGFLOAT_MAX)
+                                     options:NSStringDrawingUsesLineFragmentOrigin
+                                  attributes:@{NSFontAttributeName:fontText}
+                                     context:nil];
+    CGFloat heightOffset = 90;
+    return rect.size.height + heightOffset;
+}
+
+// Changes Carrier Status Bar to White Text
+- (UIStatusBarStyle)preferredStatusBarStyle
+{
+    return UIStatusBarStyleLightContent;
 }
 
 - (void)didReceiveMemoryWarning

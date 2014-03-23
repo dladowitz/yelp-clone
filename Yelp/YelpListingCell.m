@@ -12,7 +12,6 @@
 @interface YelpListingCell ()
 
 @property (weak, nonatomic) IBOutlet UIImageView *mainImageView;
-@property (weak, nonatomic) IBOutlet UILabel     *indexLabel;
 @property (weak, nonatomic) IBOutlet UILabel     *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel     *reviewCountLabel;
 @property (weak, nonatomic) IBOutlet UILabel     *addressAndNeighborhoodLabel;
@@ -42,10 +41,9 @@
     _yelpListing = yelpListing;
     
     // Sets the cells IU elements from local instance properties
-    self.nameLabel.text                   = yelpListing.name;
+    self.nameLabel.text                   = [NSString stringWithFormat:@"%@. %@", yelpListing.index, yelpListing.name];
     self.addressAndNeighborhoodLabel.text = [NSString stringWithFormat:@"%@, %@", yelpListing.streetAddress, yelpListing.neighborhood];
-    self.reviewCountLabel.text            = [NSString stringWithFormat: @"%@", yelpListing.reviewCount];
-    self.indexLabel.text                  = yelpListing.index;
+    self.reviewCountLabel.text            = [NSString stringWithFormat: @"%@ reviews", yelpListing.reviewCount];
     
     [self.mainImageView   setImageWithURL: [NSURL URLWithString:yelpListing.listingImageUrl]];
     [self.ratingImageView setImageWithURL: [NSURL URLWithString:yelpListing.ratingImgUrl]];
