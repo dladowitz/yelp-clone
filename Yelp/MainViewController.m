@@ -52,13 +52,20 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
         self.tableView.delegate   = self;
 
     // Navigation Bar Settings
-//    self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
+        self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
     
-    self.navigationItem.title = @"hello";
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"filter" style:UIBarButtonItemStylePlain target:self action:@selector(onFilterButton)];
+
+        // Add Search Bar to Navigation Bar
+        UISearchBar *searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(40.0, 0.0, 280.0, 44.0)];
+        searchBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        searchBar.barTintColor = [UIColor redColor];
+        UIView *searchBarView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 310.0, 44.0)];
+        searchBarView.autoresizingMask = 0;
+        searchBar.delegate = self;
+        [searchBarView addSubview:searchBar];
+        self.navigationItem.titleView = searchBarView;
     
-self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Games" style:UIBarButtonItemStylePlain target:self action:@selector(onGamesButton)];
-    
-        
     
     // Yelp API Settings
         // You can register for Yelp API keys here: http://www.yelp.com/developers/manage_api_keys
@@ -125,13 +132,8 @@ self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@
 #pragma mark - Navigation Control Methods
 
 - (void)onFilterButton {
-
-}
-
-- (void)doSave {
     NSLog(@"push the button");
-//    [self.navigationController pushViewController:[[FilterViewController alloc] init] animated:YES];
-//    
+    [self.navigationController pushViewController:[[FilterViewController alloc] init] animated:YES];
 }
 
 - (void)didReceiveMemoryWarning
