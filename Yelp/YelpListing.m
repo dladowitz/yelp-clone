@@ -21,6 +21,7 @@
         self.streetAddress   = dictionary[@"location"][@"display_address"][0];
         self.neighborhood    = dictionary[@"location"][@"display_address"][2];
         self.listingImageUrl = dictionary[@"image_url"];
+        self.category        = dictionary[@"categories"][0][0];
     }
     
     return self;

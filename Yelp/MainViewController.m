@@ -7,6 +7,7 @@
 //
 
 #import "MainViewController.h"
+#import "FilterViewController.h"
 #import "YelpClient.h"
 #import "YelpListing.h"
 #import "YelpListingCell.h"
@@ -45,16 +46,18 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
         // Creates Nib for Custom Cell and registers with tableView for reuse
         UINib *yelpListingCellNib = [UINib nibWithNibName:@"YelpListingCell" bundle:nil];
         [self.tableView registerNib:yelpListingCellNib forCellReuseIdentifier:@"YelpListingCell"];
-    
-        // Sets height of custom cells
-            // self.tableView.rowHeight = 130;
 
         // Seting dataSource and delegates for tableView
         self.tableView.dataSource = self;
         self.tableView.delegate   = self;
 
     // Navigation Bar Settings
-    self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
+//    self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
+    
+    self.navigationItem.title = @"hello";
+    
+self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Games" style:UIBarButtonItemStylePlain target:self action:@selector(onGamesButton)];
+    
         
     
     // Yelp API Settings
@@ -62,7 +65,7 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
         self.client = [[YelpClient alloc] initWithConsumerKey:kYelpConsumerKey consumerSecret:kYelpConsumerSecret accessToken:kYelpToken accessSecret:kYelpTokenSecret];
     
         // Pulling results from Yelp API.
-        [self.client searchWithTerm:@"Thai" success:^(AFHTTPRequestOperation *operation, id response) {
+        [self.client searchWithTerm:@"Ramen" success:^(AFHTTPRequestOperation *operation, id response) {
             // NSLog(@"response: %@", response);
             // Passing API results to the YelpListing model for creation
             self.yelpListings = [YelpListing yelpListingsWithArray:response[@"businesses"]];
@@ -96,6 +99,7 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
     return cell;
 }
 
+// TODO Why does this change on lower rows????
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     YelpListing *listing = self.yelpListings[indexPath.row];
@@ -110,10 +114,24 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
     return rect.size.height + heightOffset;
 }
 
+# pragma mark - Color Methods
+
 // Changes Carrier Status Bar to White Text
 - (UIStatusBarStyle)preferredStatusBarStyle
 {
     return UIStatusBarStyleLightContent;
+}
+
+#pragma mark - Navigation Control Methods
+
+- (void)onFilterButton {
+
+}
+
+- (void)doSave {
+    NSLog(@"push the button");
+//    [self.navigationController pushViewController:[[FilterViewController alloc] init] animated:YES];
+//    
 }
 
 - (void)didReceiveMemoryWarning

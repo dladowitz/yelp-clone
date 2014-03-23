@@ -44,6 +44,7 @@
     self.nameLabel.text                   = [NSString stringWithFormat:@"%@. %@", yelpListing.index, yelpListing.name];
     self.addressAndNeighborhoodLabel.text = [NSString stringWithFormat:@"%@, %@", yelpListing.streetAddress, yelpListing.neighborhood];
     self.reviewCountLabel.text            = [NSString stringWithFormat: @"%@ reviews", yelpListing.reviewCount];
+    self.categoryLabel.text               = yelpListing.category;
     
     [self.mainImageView   setImageWithURL: [NSURL URLWithString:yelpListing.listingImageUrl]];
     [self.ratingImageView setImageWithURL: [NSURL URLWithString:yelpListing.ratingImgUrl]];

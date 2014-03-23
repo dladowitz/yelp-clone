@@ -20,7 +20,8 @@
                                
     // Creates Navigation Controller - I think we don't really needt his
 //    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:mainViewController];
-//    navigationController.navigationBar.barTintColor = [UIColor redColor];
+
+
     
     // Sets the Root View Controller to the MainViewController
     self.window.rootViewController = mainViewController;

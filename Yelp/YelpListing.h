@@ -18,6 +18,8 @@
 @property (nonatomic, strong) NSString *streetAddress;
 @property (nonatomic, strong) NSString *neighborhood;
 @property (nonatomic, strong) NSString *listingImageUrl;
+@property (nonatomic, strong) NSString *category;
+
 //should really make this an int
 @property (nonatomic, strong) NSString *index;
 

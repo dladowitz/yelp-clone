@@ -25,11 +25,7 @@
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                     <color key="barTintColor" red="1" green="0.37298659159999997" blue="0.2385281209" alpha="1" colorSpace="calibratedRGB"/>
                     <items>
-                        <navigationItem id="bWu-VA-ADZ">
-                            <barButtonItem key="leftBarButtonItem" title="Filter" id="zZV-LY-P3J">
-                                <color key="tintColor" red="0.96862745100000003" green="0.96862745100000003" blue="0.96862745100000003" alpha="1" colorSpace="calibratedRGB"/>
-                            </barButtonItem>
-                        </navigationItem>
+                        <navigationItem id="bWu-VA-ADZ"/>
                     </items>
                 </navigationBar>
                 <searchBar contentMode="redraw" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="11I-5A-xil">
