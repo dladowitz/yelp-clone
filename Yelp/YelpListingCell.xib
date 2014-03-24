@@ -6,26 +6,25 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="180" id="KGk-i7-Jjw" customClass="YelpListingCell">
-            <rect key="frame" x="0.0" y="0.0" width="523" height="180"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="110" id="KGk-i7-Jjw" customClass="YelpListingCell">
+            <rect key="frame" x="0.0" y="0.0" width="523" height="110"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="523" height="179"/>
+                <rect key="frame" x="0.0" y="0.0" width="523" height="109"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Ramen Underground" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="165" translatesAutoresizingMaskIntoConstraints="NO" id="ZoN-or-k8f">
-                        <rect key="frame" x="109" y="11" width="165" height="23"/>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Ramen Underground" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="165" translatesAutoresizingMaskIntoConstraints="NO" id="ZoN-or-k8f">
+                        <rect key="frame" x="111" y="10" width="165" height="21"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <constraints>
-                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="165" id="8By-gf-kjA"/>
-                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="165" id="982-oK-7z7"/>
+                            <constraint firstAttribute="width" constant="165" id="982-oK-7z7"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uqt-5q-QIc">
-                        <rect key="frame" x="109" y="35" width="83" height="20"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uqt-5q-QIc">
+                        <rect key="frame" x="106" y="34" width="83" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="83" id="5AV-Ck-RDI"/>
@@ -33,7 +32,7 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="564 Reviews" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mb2-49-6uo">
-                        <rect key="frame" x="200" y="35" width="107" height="21"/>
+                        <rect key="frame" x="192" y="34" width="107" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="107" id="Lro-28-TBR"/>
@@ -42,8 +41,8 @@
                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="111 Sutter St, Downtown" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4si-UI-Q0I">
-                        <rect key="frame" x="109" y="64" width="190" height="21"/>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="111 Sutter St, Downtown" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4si-UI-Q0I">
+                        <rect key="frame" x="106" y="57" width="190" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="190" id="moW-rh-JVW"/>
@@ -51,8 +50,8 @@
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Ramen" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xvn-tF-8oK">
-                        <rect key="frame" x="109" y="85" width="71" height="21"/>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ramen" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xvn-tF-8oK">
+                        <rect key="frame" x="106" y="78" width="71" height="21"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="71" id="WTl-B0-XEu"/>
@@ -62,8 +61,8 @@
                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Cyo-g4-2FQ">
-                        <rect key="frame" x="10" y="11" width="91" height="90"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Cyo-g4-2FQ">
+                        <rect key="frame" x="10" y="10" width="91" height="90"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="91" id="QaJ-M3-H2r"/>
@@ -75,9 +74,14 @@
                 <constraints>
                     <constraint firstItem="Cyo-g4-2FQ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="6NQ-xZ-ZAR"/>
                     <constraint firstItem="uqt-5q-QIc" firstAttribute="top" secondItem="ZoN-or-k8f" secondAttribute="bottom" constant="3" id="8fU-ah-yfk"/>
-                    <constraint firstItem="4si-UI-Q0I" firstAttribute="top" secondItem="uqt-5q-QIc" secondAttribute="bottom" constant="3" id="Jto-e2-Qwv"/>
+                    <constraint firstItem="4si-UI-Q0I" firstAttribute="leading" secondItem="Cyo-g4-2FQ" secondAttribute="trailing" constant="5" id="Dlb-Ve-hP1"/>
+                    <constraint firstItem="uqt-5q-QIc" firstAttribute="leading" secondItem="Cyo-g4-2FQ" secondAttribute="trailing" constant="5" id="Ebb-4N-cH8"/>
+                    <constraint firstItem="4si-UI-Q0I" firstAttribute="top" relation="greaterThanOrEqual" secondItem="uqt-5q-QIc" secondAttribute="bottom" constant="3" id="Jto-e2-Qwv"/>
+                    <constraint firstAttribute="bottom" secondItem="Xvn-tF-8oK" secondAttribute="bottom" constant="10" id="Xen-gQ-R0G"/>
+                    <constraint firstItem="Xvn-tF-8oK" firstAttribute="leading" secondItem="Cyo-g4-2FQ" secondAttribute="trailing" constant="5" id="Z8B-tZ-1qB"/>
                     <constraint firstItem="ZoN-or-k8f" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="eHE-BZ-kTL"/>
                     <constraint firstItem="Xvn-tF-8oK" firstAttribute="top" secondItem="4si-UI-Q0I" secondAttribute="bottom" constant="3" id="eha-Pt-dMh"/>
+                    <constraint firstItem="4si-UI-Q0I" firstAttribute="top" secondItem="mb2-49-6uo" secondAttribute="bottom" constant="3" id="p7d-UT-vje"/>
                     <constraint firstItem="mb2-49-6uo" firstAttribute="leading" secondItem="uqt-5q-QIc" secondAttribute="trailing" constant="3" id="qgu-vP-HqM"/>
                     <constraint firstItem="mb2-49-6uo" firstAttribute="top" secondItem="ZoN-or-k8f" secondAttribute="bottom" constant="3" id="t0G-7p-ddJ"/>
                     <constraint firstItem="ZoN-or-k8f" firstAttribute="leading" secondItem="Cyo-g4-2FQ" secondAttribute="trailing" constant="10" id="uPG-FN-Mxw"/>

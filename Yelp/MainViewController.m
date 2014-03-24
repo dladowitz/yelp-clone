@@ -51,7 +51,7 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
         self.tableView.dataSource = self;
         self.tableView.delegate   = self;
 
-    // Navigation Bar Settings
+    // Navigation Bar Settings - Should try to move this all to a method
         self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
     
         self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"filter" style:UIBarButtonItemStylePlain target:self action:@selector(onFilterButton)];
@@ -72,7 +72,7 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
         self.client = [[YelpClient alloc] initWithConsumerKey:kYelpConsumerKey consumerSecret:kYelpConsumerSecret accessToken:kYelpToken accessSecret:kYelpTokenSecret];
     
         // Pulling results from Yelp API.
-        [self.client searchWithTerm:@"Ramen" success:^(AFHTTPRequestOperation *operation, id response) {
+        [self.client searchWithTerm:@"Thai" success:^(AFHTTPRequestOperation *operation, id response) {
             // NSLog(@"response: %@", response);
             // Passing API results to the YelpListing model for creation
             self.yelpListings = [YelpListing yelpListingsWithArray:response[@"businesses"]];
@@ -112,7 +112,7 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
     YelpListing *listing = self.yelpListings[indexPath.row];
     
     NSString *text = listing.name;
-    UIFont *fontText = [UIFont systemFontOfSize:17.0];
+    UIFont *fontText = [UIFont boldSystemFontOfSize:17.0];
     CGRect rect = [text boundingRectWithSize:CGSizeMake(165, CGFLOAT_MAX)
                                      options:NSStringDrawingUsesLineFragmentOrigin
                                   attributes:@{NSFontAttributeName:fontText}
