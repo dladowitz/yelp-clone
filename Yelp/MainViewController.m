@@ -20,8 +20,10 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
 @interface MainViewController ()
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (nonatomic, strong) YelpClient *client;
-@property (nonatomic, strong) NSArray *yelpListings;
+@property (nonatomic, strong) YelpClient  *client;
+@property (nonatomic, strong) NSArray     *yelpListings;
+@property (nonatomic, strong) UISearchBar *searchBar;
+@property (nonatomic, strong) UIView      *searchBarView;
 
 @end
 
@@ -57,14 +59,15 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
         self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"filter" style:UIBarButtonItemStylePlain target:self action:@selector(onFilterButton)];
 
         // Add Search Bar to Navigation Bar
-        UISearchBar *searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(40.0, 0.0, 280.0, 44.0)];
-        searchBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-        searchBar.barTintColor = [UIColor redColor];
-        UIView *searchBarView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 310.0, 44.0)];
-        searchBarView.autoresizingMask = 0;
-        searchBar.delegate = self;
-        [searchBarView addSubview:searchBar];
-        self.navigationItem.titleView = searchBarView;
+        self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(40.0, 0.0, 280.0, 44.0)];
+        self.searchBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        self.searchBar.barTintColor = [UIColor redColor];
+    
+        self.searchBarView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 310.0, 44.0)];
+        self.searchBarView.autoresizingMask = 0;
+        self.searchBar.delegate = self;
+        [self.searchBarView addSubview:self.searchBar];
+        self.navigationItem.titleView = self.searchBarView;
     
     
     // Yelp API Settings
@@ -73,7 +76,6 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
     
         // Pulling results from Yelp API.
         [self.client searchWithTerm:@"Thai" success:^(AFHTTPRequestOperation *operation, id response) {
-            // NSLog(@"response: %@", response);
             // Passing API results to the YelpListing model for creation
             self.yelpListings = [YelpListing yelpListingsWithArray:response[@"businesses"]];
             [self.tableView reloadData];
@@ -106,7 +108,7 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
     return cell;
 }
 
-// TODO Why does this change on lower rows????
+
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     YelpListing *listing = self.yelpListings[indexPath.row];
@@ -135,6 +137,29 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
     NSLog(@"push the button");
     [self.navigationController pushViewController:[[FilterViewController alloc] init] animated:YES];
 }
+
+#pragma mark - Search Methods
+
+-(void)searchBarTextDidEndEditing:(UISearchBar *)searchBar {
+    [searchBar resignFirstResponder];
+}
+
+// Using search bar to do call API
+-(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+    [searchBar resignFirstResponder];
+    NSString *searchText = searchBar.text;
+    
+    [self.client searchWithTerm:searchText success:^(AFHTTPRequestOperation *operation, id response) {
+        // Passing API results to the YelpListing model for creation
+        self.yelpListings = [YelpListing yelpListingsWithArray:response[@"businesses"]];
+        [self.tableView reloadData];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"error: %@", [error description]);
+    }];
+    
+}
+
 
 - (void)didReceiveMemoryWarning
 {
