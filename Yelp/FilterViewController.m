@@ -87,8 +87,13 @@
     @"type":@"switches",
     @"list":@[@"Take-out",@"Good for Groups",@"Has TV",@"Accepts Credit Cards",@"Wheelchair Accessible",@"Full Bar",@"Beer & Wine only",@"Happy Hour",@"Free Wi-Fi",@"Paid Wi-fi"]
     },
-                       nil
-                       ];
+    @{
+     @"name":@"Categories",
+     @"type":@"switches",
+     @"list":@[@"All",@"Active Live",@"Arts & Entertainment",@"Automotive",@"Beauty & Spas",@"Education",@"Event Planning & Services"]
+     },
+                       
+    nil];
 }
 
 
@@ -109,9 +114,12 @@
             return @"Distance";
         } else if (section == 3){
             return @"Sort By";
-        } else {
+        } else if (section == 4){
             return @"General Features";
+        } else {
+            return @"Categories";
         }
+
     }
 
     // Should probably clean up and make a case method
@@ -159,7 +167,7 @@
             
             cell.textLabel.text = self.categories[indexPath.section][@"list"][indexPath.row];
             
-            if ([self.categories[indexPath.section][@"name"] isEqual: @"Price"] || [self.categories[indexPath.section][@"name"]  isEqual: @"Most Popular"] || [self.categories[indexPath.section][@"name"]  isEqual: @"General Features"]){
+            if ([self.categories[indexPath.section][@"name"] isEqual: @"Price"] || [self.categories[indexPath.section][@"name"]  isEqual: @"Most Popular"] || [self.categories[indexPath.section][@"name"]  isEqual: @"General Features"] || [self.categories[indexPath.section][@"name"]  isEqual: @"Categories"]){
                 cell.accessoryView = [[UISwitch alloc] init];
             } else if ([self.categories[indexPath.section][@"name"]  isEqual: @"Distance"] || [self.categories[indexPath.section][@"name"]  isEqual: @"Sort By"]){
                 cell.accessoryType = UITableViewCellAccessoryCheckmark;
