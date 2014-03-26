@@ -160,6 +160,7 @@
             return cell;
         } else if ([self.categories[indexPath.section][@"name"]  isEqual: @"Price"] ) {
             PriceCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PriceCell" forIndexPath:indexPath];
+            cell.delegate = self;
             return cell;
 
         } else {
@@ -192,6 +193,14 @@
     [self.tableView reloadData];
     
 }
+
+
+#pragma mark Price Cell Delegate Methods
+
+-(void)sender:(PriceCell *)sender didChangeValue:(int)value{
+    NSLog(@"Segment Control Pressed");
+}
+
 
 - (void)didReceiveMemoryWarning
 {

@@ -22,10 +22,16 @@
                             <segment title="$$$"/>
                             <segment title="$$$$"/>
                         </segments>
+                        <connections>
+                            <action selector="segmentControl:" destination="KGk-i7-Jjw" eventType="valueChanged" id="E38-Qq-QMk"/>
+                        </connections>
                     </segmentedControl>
                 </subviews>
             </tableViewCellContentView>
             <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+            <connections>
+                <outlet property="segmentControl" destination="LUF-p7-Emd" id="HGf-z8-EFE"/>
+            </connections>
         </tableViewCell>
     </objects>
 </document>

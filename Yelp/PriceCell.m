@@ -8,11 +8,25 @@
 
 #import "PriceCell.h"
 
+@interface PriceCell ()
+
+-(void)didChangeValue:(id)sender;
+
+@end
+
+
 @implementation PriceCell
 
 - (void)awakeFromNib
 {
     // Initialization code
+    [self.segmentControl addTarget:self action:@selector(didChangeValue:) forControlEvents:UIControlEventValueChanged];
+    
+}
+
+
+- (void)didChangeValue:(id)sender {
+    [self.delegate sender:self didChangeValue:self.segmentControl.selectedSegmentIndex];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated

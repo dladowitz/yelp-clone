@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PriceCell.h"
 
-@interface FilterViewController : UIViewController
+@interface FilterViewController : UIViewController <PriceCellDelegate>
 
 @end
