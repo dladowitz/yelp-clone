@@ -8,7 +8,17 @@
 
 #import <UIKit/UIKit.h>
 #import "PriceCell.h"
+#import "SwitchCell.h"
 
-@interface FilterViewController : UIViewController <PriceCellDelegate>
+@class FilterViewController;
+
+@protocol FilterViewControllerDelegate <NSObject>
+
+- (void)addFiltersViewController:(FilterViewController *)controller didFinishSaving:(NSMutableArray *)filters;
+@end
+
+@interface FilterViewController : UIViewController <PriceCellDelegate, SwitchCellDelegate >
+
+@property (nonatomic, weak) id <FilterViewControllerDelegate> delegate;
 
 @end

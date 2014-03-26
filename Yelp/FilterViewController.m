@@ -9,18 +9,16 @@
 #import "FilterViewController.h"
 #import "SeeAllCell.h"
 #import "PriceCell.h"
+#import "SwitchCell.h"
 
-@interface FilterViewController () <UITableViewDataSource, UITableViewDelegate>
+@interface FilterViewController () <UITableViewDataSource, UITableViewDelegate, FilterViewControllerDelegate>
 
 @property (nonatomic, strong) NSMutableArray *categories;
+@property (nonatomic, strong) NSMutableArray *mostPopularStates;
 @property (nonatomic, assign) BOOL generalFeaturesExpanded;
 @property (nonatomic, assign) BOOL sortByExpanded;
 @property (nonatomic, assign) BOOL distanceExpanded;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-
-//@property (nonatomic, strong) NSMutableDictionary *options;
-//@property (nonatomic, strong) NSMutableDictionary *expandedCategories;
-
 
 @end
 
@@ -44,16 +42,33 @@
         self.tableView.dataSource = self;
         self.tableView.delegate = self;
 
-    // Registering Custom Cells
-    UINib *seeAllNib = [UINib nibWithNibName:@"SeeAllCell" bundle:nil];
-    [self.tableView registerNib:seeAllNib forCellReuseIdentifier:@"SeeAllCell"];
+//    self.mostPopularStates = [[NSMutableArray alloc] init];
+    self.mostPopularStates = [NSMutableArray arrayWithObjects: @(YES), @(NO), @(NO), @(NO), nil];
     
-    UINib *pricelNib = [UINib nibWithNibName:@"PriceCell" bundle:nil];
-    [self.tableView registerNib:pricelNib forCellReuseIdentifier:@"PriceCell"];
+    
+    
+    // Registering Custom Cells
+        UINib *seeAllNib = [UINib nibWithNibName:@"SeeAllCell" bundle:nil];
+        [self.tableView registerNib:seeAllNib forCellReuseIdentifier:@"SeeAllCell"];
+        
+        UINib *pricelNib = [UINib nibWithNibName:@"PriceCell" bundle:nil];
+        [self.tableView registerNib:pricelNib forCellReuseIdentifier:@"PriceCell"];
+        
+        UINib *switchNib = [UINib nibWithNibName:@"SwitchCell" bundle:nil];
+        [self.tableView registerNib:switchNib forCellReuseIdentifier:@"SwitchCell"];
     
     // Set up filter categories
         [self setupOptions];
     
+
+    
+}
+
+-(void)viewDidAppear:(BOOL)animated {
+    // Delegate info
+        FilterViewController *filterViewController = [FilterViewController alloc];
+        filterViewController.delegate = self;
+//        [[self navigationController] pushViewController:filterViewController animated:YES];
 }
 
 // Thanks Nick H!
@@ -65,7 +80,8 @@
   @{
     @"name":@"Price",
     @"type":@"segmented",
-    @"list":@[@"$",@"$$",@"$$$",@"$$$$"]
+    @"list":@[@"$",@"$$",@"$$$",@"$$$$"],
+    @"values":@1
     },
   @{
     @"name":@"Most Popular",
@@ -75,24 +91,27 @@
   @{
     @"name":@"Distance",
     @"type":@"expandable",
-    @"list":@[@"Auto",@"2 blocks",@"6 blocks",@"1 mile",@"5 miles"]
+    @"list":@[@"Auto",@"2 blocks",@"6 blocks",@"1 mile",@"5 miles"],
+    @"values":@[@(NO), @(NO), @(NO), @(NO), @(NO)]
     },
   @{
     @"name":@"Sort By",
     @"type":@"expandable",
-    @"list":@[@"Best Match",@"Distance",@"Rating",@"Most Reviewed"]
+    @"list":@[@"Best Match",@"Distance",@"Rating",@"Most Reviewed"],
+    @"values":@[@(NO), @(NO), @(NO), @(NO)]
     },
   @{
     @"name":@"General Features",
     @"type":@"switches",
-    @"list":@[@"Take-out",@"Good for Groups",@"Has TV",@"Accepts Credit Cards",@"Wheelchair Accessible",@"Full Bar",@"Beer & Wine only",@"Happy Hour",@"Free Wi-Fi",@"Paid Wi-fi"]
+    @"list":@[@"Take-out",@"Good for Groups",@"Has TV",@"Accepts Credit Cards",@"Wheelchair Accessible",@"Full Bar",@"Beer & Wine only",@"Happy Hour",@"Free Wi-Fi",@"Paid Wi-fi"],
+    @"values":@[@(NO), @(NO), @(NO), @(NO), @(NO), @(NO), @(NO), @(NO), @(NO), @(NO)]
     },
     @{
      @"name":@"Categories",
      @"type":@"switches",
-     @"list":@[@"All",@"Active Live",@"Arts & Entertainment",@"Automotive",@"Beauty & Spas",@"Education",@"Event Planning & Services"]
+     @"list":@[@"All",@"Active Live",@"Arts & Entertainment",@"Automotive",@"Beauty & Spas",@"Education",@"Event Planning & Services"],
+     @"values":@[@(NO), @(NO), @(NO), @(NO), @(NO), @(NO), @(NO)]
      },
-                       
     nil];
 }
 
@@ -162,17 +181,27 @@
             PriceCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PriceCell" forIndexPath:indexPath];
             cell.delegate = self;
             return cell;
+        } else if ([self.categories[indexPath.section][@"name"]  isEqual: @"Most Popular"] || [self.categories[indexPath.section][@"name"]  isEqual: @"General Features"] || [self.categories[indexPath.section][@"name"]  isEqual: @"Categories"]) {
+            SwitchCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SwitchCell" forIndexPath:indexPath];
 
+            cell.delegate = self;
+            cell.switchLabel.text = self.categories[indexPath.section][@"list"][indexPath.row];
+            
+            if([self.categories[indexPath.section][@"name"]  isEqual: @"Most Popular"]){
+                cell.onSwitch.on = [self.mostPopularStates[indexPath.row] boolValue];
+                return cell;
+            } else {
+                cell.onSwitch.on = [self.categories[indexPath.section][@"values"][indexPath.row] boolValue];
+                return cell;
+            }
+
+            
         } else {
             UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
             
             cell.textLabel.text = self.categories[indexPath.section][@"list"][indexPath.row];
-            
-            if ([self.categories[indexPath.section][@"name"] isEqual: @"Price"] || [self.categories[indexPath.section][@"name"]  isEqual: @"Most Popular"] || [self.categories[indexPath.section][@"name"]  isEqual: @"General Features"] || [self.categories[indexPath.section][@"name"]  isEqual: @"Categories"]){
-                cell.accessoryView = [[UISwitch alloc] init];
-            } else if ([self.categories[indexPath.section][@"name"]  isEqual: @"Distance"] || [self.categories[indexPath.section][@"name"]  isEqual: @"Sort By"]){
-                cell.accessoryType = UITableViewCellAccessoryCheckmark;
-            }
+            cell.accessoryType = UITableViewCellAccessoryCheckmark;
+
             return cell;
         }
     }
@@ -195,12 +224,29 @@
 }
 
 
-#pragma mark Price Cell Delegate Methods
+#pragma mark - Price Cell Delegate Methods
+//
+//-(void)sender:(PriceCell *)sender didChangeValue:(int)value{
+//    NSLog(@"Segment Control Pressed");
+//}
 
--(void)sender:(PriceCell *)sender didChangeValue:(int)value{
-    NSLog(@"Segment Control Pressed");
+
+#pragma mark - Switch Cell Delegate Methods
+
+// On switch change the new value is pushed back to the mostPopularStates array
+- (void)sender:(SwitchCell *)sender didChangeValue:(BOOL)value{
+
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
+    self.mostPopularStates[indexPath.row] = @(value);
 }
 
+
+#pragma mark - FilterViewController Delegate Methods
+- (void)addFiltersViewController:(FilterViewController *)controller didFinishSaving:(NSMutableArray *)filters {
+    
+    NSMutableArray *testFilters = [NSMutableArray arrayWithObjects: @(YES), @(NO), @(NO), @(NO), nil];
+    [self.delegate addFiltersViewController:self didFinishSaving:testFilters];
+}
 
 - (void)didReceiveMemoryWarning
 {

@@ -27,6 +27,8 @@
 		AC198A1F18DE9E66008A47B3 /* FilterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC198A1D18DE9E66008A47B3 /* FilterViewController.xib */; };
 		AC5D7A9518DE0D2E00570F00 /* YelpListingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AC5D7A9318DE0D2E00570F00 /* YelpListingCell.m */; };
 		AC5D7A9618DE0D2E00570F00 /* YelpListingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC5D7A9418DE0D2E00570F00 /* YelpListingCell.xib */; };
+		AC76120D18E2B1DB00C2283D /* SwitchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AC76120B18E2B1DB00C2283D /* SwitchCell.m */; };
+		AC76120E18E2B1DB00C2283D /* SwitchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC76120C18E2B1DB00C2283D /* SwitchCell.xib */; };
 		ACD189F418DD29A8005345EB /* YelpListing.m in Sources */ = {isa = PBXBuildFile; fileRef = ACD189F318DD29A8005345EB /* YelpListing.m */; };
 		ACFAC49B18DFDCF20071A51E /* SeeAllCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ACFAC49918DFDCF20071A51E /* SeeAllCell.m */; };
 		ACFAC49C18DFDCF20071A51E /* SeeAllCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = ACFAC49A18DFDCF20071A51E /* SeeAllCell.xib */; };
@@ -74,6 +76,9 @@
 		AC5D7A9218DE0D2E00570F00 /* YelpListingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YelpListingCell.h; sourceTree = "<group>"; };
 		AC5D7A9318DE0D2E00570F00 /* YelpListingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YelpListingCell.m; sourceTree = "<group>"; };
 		AC5D7A9418DE0D2E00570F00 /* YelpListingCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YelpListingCell.xib; sourceTree = "<group>"; };
+		AC76120A18E2B1DB00C2283D /* SwitchCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwitchCell.h; sourceTree = "<group>"; };
+		AC76120B18E2B1DB00C2283D /* SwitchCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwitchCell.m; sourceTree = "<group>"; };
+		AC76120C18E2B1DB00C2283D /* SwitchCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SwitchCell.xib; sourceTree = "<group>"; };
 		ACD189F218DD29A8005345EB /* YelpListing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YelpListing.h; sourceTree = "<group>"; };
 		ACD189F318DD29A8005345EB /* YelpListing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YelpListing.m; sourceTree = "<group>"; };
 		ACFAC49818DFDCF20071A51E /* SeeAllCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SeeAllCell.h; sourceTree = "<group>"; };
@@ -228,6 +233,9 @@
 				ACFAC49D18DFE53E0071A51E /* PriceCell.h */,
 				ACFAC49E18DFE53E0071A51E /* PriceCell.m */,
 				ACFAC49F18DFE53E0071A51E /* PriceCell.xib */,
+				AC76120A18E2B1DB00C2283D /* SwitchCell.h */,
+				AC76120B18E2B1DB00C2283D /* SwitchCell.m */,
+				AC76120C18E2B1DB00C2283D /* SwitchCell.xib */,
 			);
 			name = views;
 			sourceTree = "<group>";
@@ -310,6 +318,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AC198A1F18DE9E66008A47B3 /* FilterViewController.xib in Resources */,
+				AC76120E18E2B1DB00C2283D /* SwitchCell.xib in Resources */,
 				AC5D7A9618DE0D2E00570F00 /* YelpListingCell.xib in Resources */,
 				42FD6C5518DC286B000BF2B9 /* InfoPlist.strings in Resources */,
 				ACFAC49C18DFDCF20071A51E /* SeeAllCell.xib in Resources */,
@@ -376,6 +385,7 @@
 				ACFAC49B18DFDCF20071A51E /* SeeAllCell.m in Sources */,
 				420474F618DC299500E88E07 /* YelpClient.m in Sources */,
 				420474FB18DC2B2100E88E07 /* MainViewController.m in Sources */,
+				AC76120D18E2B1DB00C2283D /* SwitchCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

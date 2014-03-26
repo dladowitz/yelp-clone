@@ -149,6 +149,7 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
     [searchBar resignFirstResponder];
     NSString *searchText = searchBar.text;
     
+    
     [self.client searchWithTerm:searchText success:^(AFHTTPRequestOperation *operation, id response) {
         // Passing API results to the YelpListing model for creation
         self.yelpListings = [YelpListing yelpListingsWithArray:response[@"businesses"]];
@@ -160,6 +161,12 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
     
 }
 
+
+#pragma mark - Filter View Controller Delegate Methods
+- (void)adFiltersViewController:(FilterViewController *)controller didFinishSaving:(NSMutableArray *)filters
+{
+    NSLog(@"This was returned from FilterViewController %@",filters);
+}
 
 - (void)didReceiveMemoryWarning
 {
