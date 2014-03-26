@@ -168,10 +168,9 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
 
 
 #pragma mark - Filter View Controller Delegate Methods
-- (void)adFiltersViewController:(FilterViewController *)controller didFinishSaving:(NSMutableArray *)filters
-{
-    //Not sure why the filters are not being passed from FilterViewController
-    NSLog(@"This was returned from FilterViewController %@",filters);
+-(void)processFilterSettingsData:(NSMutableDictionary *)data {
+    NSLog(@"%@", data);
+    
 }
 
 - (void)didReceiveMemoryWarning

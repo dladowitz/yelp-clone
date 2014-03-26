@@ -10,15 +10,14 @@
 #import "PriceCell.h"
 #import "SwitchCell.h"
 
-@class FilterViewController;
+@protocol FilterViewDelegate <NSObject>
 
-@protocol FilterViewControllerDelegate <NSObject>
+-(void)processFilterSettingsData:(NSMutableDictionary *)data;
 
-- (void)addFiltersViewController:(FilterViewController *)controller didFinishSaving:(NSMutableArray *)filters;
 @end
 
-@interface FilterViewController : UIViewController <PriceCellDelegate, SwitchCellDelegate >
+@interface FilterViewController : UIViewController <SwitchCellDelegate >
 
-@property (nonatomic, weak) id <FilterViewControllerDelegate> delegate;
+@property (nonatomic, assign) id<FilterViewDelegate> delegate;
 
 @end

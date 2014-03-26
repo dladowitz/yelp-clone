@@ -11,7 +11,7 @@
 #import "PriceCell.h"
 #import "SwitchCell.h"
 
-@interface FilterViewController () <UITableViewDataSource, UITableViewDelegate, FilterViewControllerDelegate>
+@interface FilterViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) NSMutableArray *categories;
 @property (nonatomic, strong) NSMutableArray *priceStates;
@@ -49,7 +49,18 @@
         self.tableView.delegate = self;
 
 
+    UINavigationBar *header = [[UINavigationBar alloc] initWithFrame:CGRectMake(0,0,320,45)];
+    UINavigationItem *buttonHold = [[UINavigationItem alloc]initWithTitle:@"Filter"];
     
+    UIBarButtonItem *barSaveButton = [[UIBarButtonItem alloc] initWithTitle:@"Save" style:UIBarButtonItemStyleDone target:self action:@selector(saveFilter:)];
+    
+
+    [buttonHold setRightBarButtonItem:barSaveButton];
+    
+    NSArray *barItemArray = [[NSArray alloc]initWithObjects:buttonHold,nil];
+    
+    [header setItems:barItemArray];
+    [self.tableView setTableHeaderView:header];
     
     
     // Registering Custom Cells
@@ -299,10 +310,22 @@
 
 
 #pragma mark - FilterViewController Delegate Methods
-- (void)addFiltersViewController:(FilterViewController *)controller didFinishSaving:(NSMutableArray *)filters {
-    
-    NSMutableArray *testFilters = [NSMutableArray arrayWithObjects: @(YES), @(NO), @(NO), @(NO), nil];
-    [self.delegate addFiltersViewController:self didFinishSaving:testFilters];
+
+-(void)processFilterSettingsData:(NSMutableDictionary *)data {
+    if ([self.delegate respondsToSelector:@selector(processFilterSettingsData:)]) {
+        [self.delegate processFilterSettingsData:data];
+    }
+}
+
+#pragma mark - Buttons
+
+- (void)saveFilter:(UIBarButtonItem *)button
+{
+//    NSMutableDictionary *filters = [[NSMutableDictionary alloc] init];
+//    
+//    [self filterSettings:filters];
+//    [self dismissViewControllerAnimated:YES completion:^{}];
+//    return;
 }
 
 - (void)didReceiveMemoryWarning

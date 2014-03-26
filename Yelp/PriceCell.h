@@ -8,19 +8,19 @@
 
 #import <UIKit/UIKit.h>
 
-@class PriceCell;
-
-@protocol PriceCellDelegate <NSObject>
-
-@optional
-//Might need to change (NSInteger *) to (int)
-- (void)sender:(PriceCell* )sender didChangeValue:(int)value;
-
-@end
+//@class PriceCell;
+//
+//@protocol PriceCellDelegate <NSObject>
+//
+//@optional
+////Might need to change (NSInteger *) to (int)
+//- (void)sender:(PriceCell* )sender didChangeValue:(int)value;
+//
+//@end
 
 @interface PriceCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segmentControl;
-@property  (nonatomic, weak) id<PriceCellDelegate> delegate;
+//@property  (nonatomic, weak) id<PriceCellDelegate> delegate;
 
 @end
