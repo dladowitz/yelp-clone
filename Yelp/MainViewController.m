@@ -71,32 +71,18 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
     
     UINavigationBar *headerView = [[UINavigationBar alloc] initWithFrame:CGRectMake(0,20,320,44)];
     
-    //The UINavigationItem is neede as a "box" that holds the Buttons or other elements
     UINavigationItem *buttonCarrier = [[UINavigationItem alloc]initWithTitle:@"Hmm"];
     
-    //Creating some buttons:
     UIBarButtonItem *barBackButton = [[UIBarButtonItem alloc] initWithTitle:@"Filter" style:UIBarButtonItemStyleDone target:self action:@selector(filter)];
-    
-    //Putting the Buttons on the Carrier
     [buttonCarrier setLeftBarButtonItem:barBackButton];
-    
-    //The NavigationBar accepts those "Carrier" (UINavigationItem) inside an Array
     NSArray *barItemArray = [[NSArray alloc]initWithObjects:buttonCarrier,nil];
-    
-    // Attaching the Array to the NavigationBar
     [headerView setItems:barItemArray];
-    
-    // Adding the NavigationBar to the TableView
     [self.tableView setTableHeaderView:headerView];
     
     [headerView setBarTintColor:[UIColor redColor]];
     [headerView setTintColor:[UIColor whiteColor]];
-//    [headerView setTitleTextAttributes:@{NSForegroundColorAttributeName:UIColorFromRGB(0xFFFFFF)}];
-    
-    // Set search bar
     self.searchBar = [[UISearchBar alloc] init];
     self.searchBar.delegate = self;
-    
     headerView.topItem.titleView = self.searchBar;
     
     
@@ -205,8 +191,8 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
     
     NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
     
-    if (data[@"mostPopular"][2]) {
-        [dictionary setObject:data[@"mostPopular"][2] forKey:@"deals_filter"];
+    if (data[@"mostPopular"][0]) {
+        [dictionary setObject:data[@"mostPopular"][0] forKey:@"deals_filter"];
     }
     
         NSLog(@"dictionary, %@", dictionary);

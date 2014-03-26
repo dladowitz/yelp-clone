@@ -110,7 +110,7 @@
   @{
     @"name":@"Most Popular",
     @"type":@"switches",
-    @"list":@[@"Open Now",@"Hot & New",@"Offering a Deal",@"Delivery"]
+    @"list":@[@"Offering a Deal", @"Open Now",@"Hot & New",@"Delivery"]
     },
   @{
     @"name":@"Distance",
@@ -343,11 +343,6 @@
         [filters setObject:self.sortByStates forKey:@"sortBy"];
         [filters setObject:self.generalFeaturesStates forKey:@"generalFeaturesPopular"];
         [filters setObject:self.categoriesStates forKey:@"categoriesPopular"];
-//    [filters setObject:[NSNumber numberWithInt:self.sortByCurrentIndex] forKey:@"sortByCurrentIndex"];
-//    [filters setObject:self.mostPopularSwitchStates forKey:@"mostPopularSwitchStates"];
-//    [filters setObject:self.categoriesSwitchStates forKey:@"categoriesSwitchStates"];
-//    [filters setObject:self.categories[5][@"values"] forKey:@"categories"];
-//    [filters setObject:self.categories[2][@"values"] forKey:@"distances"];
     
     
     [self processFilterSettingsData:filters];
