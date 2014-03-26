@@ -25,7 +25,6 @@
     navigationController.navigationBar.tintColor = [UIColor whiteColor];
     
     navigationController.navigationBar.barTintColor = [UIColor redColor];
-//    navigationController.translucent = NO;
     
     // Sets the Root View Controller to the MainViewController
     self.window.rootViewController = navigationController;

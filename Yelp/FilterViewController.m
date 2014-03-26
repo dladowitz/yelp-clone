@@ -14,10 +14,16 @@
 @interface FilterViewController () <UITableViewDataSource, UITableViewDelegate, FilterViewControllerDelegate>
 
 @property (nonatomic, strong) NSMutableArray *categories;
+@property (nonatomic, strong) NSMutableArray *priceStates;
 @property (nonatomic, strong) NSMutableArray *mostPopularStates;
+@property (nonatomic, strong) NSMutableArray *distanceStates;
+@property (nonatomic, strong) NSMutableArray *sortByStates;
+@property (nonatomic, strong) NSMutableArray *generalFeaturesStates;
+@property (nonatomic, strong) NSMutableArray *categoriesStates;
 @property (nonatomic, assign) BOOL generalFeaturesExpanded;
 @property (nonatomic, assign) BOOL sortByExpanded;
 @property (nonatomic, assign) BOOL distanceExpanded;
+@property (nonatomic, assign) BOOL categoriesExpanded;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @end
@@ -42,8 +48,7 @@
         self.tableView.dataSource = self;
         self.tableView.delegate = self;
 
-//    self.mostPopularStates = [[NSMutableArray alloc] init];
-    self.mostPopularStates = [NSMutableArray arrayWithObjects: @(YES), @(NO), @(NO), @(NO), nil];
+
     
     
     
@@ -64,12 +69,6 @@
     
 }
 
--(void)viewDidAppear:(BOOL)animated {
-    // Delegate info
-        FilterViewController *filterViewController = [FilterViewController alloc];
-        filterViewController.delegate = self;
-//        [[self navigationController] pushViewController:filterViewController animated:YES];
-}
 
 // Thanks Nick H!
 - (void)setupOptions {
@@ -113,6 +112,14 @@
      @"values":@[@(NO), @(NO), @(NO), @(NO), @(NO), @(NO), @(NO)]
      },
     nil];
+    
+    // Arrays for mutable values
+        self.mostPopularStates = [NSMutableArray arrayWithObjects: @(YES), @(NO), @(NO), @(NO), nil];
+        self.priceStates = [NSMutableArray arrayWithObjects: @(0), nil];
+        self.distanceStates = [NSMutableArray arrayWithObjects: @(YES), @(NO), @(NO), @(NO), @(NO), nil];
+        self.sortByStates = [NSMutableArray arrayWithObjects: @(YES), @(NO), @(NO), @(NO), nil];
+        self.generalFeaturesStates = [NSMutableArray arrayWithObjects: @(YES), @(NO), @(NO), @(NO), @(YES), @(NO), @(NO), @(NO), @(YES), @(NO), nil];
+        self.categoriesStates = [NSMutableArray arrayWithObjects: @(YES), @(NO), @(NO), @(NO), @(YES), @(NO), @(NO), nil];
 }
 
 
@@ -149,6 +156,12 @@
             } else {
                 return ((NSArray *)self.categories[section][@"list"]).count;
             }
+        } else if ( [self.categories[section][@"name"]  isEqual: @"Categories"] ){
+            if(!self.categoriesExpanded){
+                return 4;
+            } else {
+                return ((NSArray *)self.categories[section][@"list"]).count;
+            }
         } else if( [self.categories[section][@"name"]  isEqual: @"Sort By"] ){
             if(!self.sortByExpanded){
                 return 1;
@@ -177,9 +190,12 @@
         if ([self.categories[indexPath.section][@"name"]  isEqual: @"General Features"] && !self.generalFeaturesExpanded && indexPath.row == 3) {
             SeeAllCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SeeAllCell" forIndexPath:indexPath];
             return cell;
+        } else if ([self.categories[indexPath.section][@"name"]  isEqual: @"Categories"] && !self.categoriesExpanded && indexPath.row == 3) {
+            SeeAllCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SeeAllCell" forIndexPath:indexPath];
+            return cell;
         } else if ([self.categories[indexPath.section][@"name"]  isEqual: @"Price"] ) {
             PriceCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PriceCell" forIndexPath:indexPath];
-            cell.delegate = self;
+//            cell.delegate = self;
             return cell;
         } else if ([self.categories[indexPath.section][@"name"]  isEqual: @"Most Popular"] || [self.categories[indexPath.section][@"name"]  isEqual: @"General Features"] || [self.categories[indexPath.section][@"name"]  isEqual: @"Categories"]) {
             SwitchCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SwitchCell" forIndexPath:indexPath];
@@ -190,17 +206,32 @@
             if([self.categories[indexPath.section][@"name"]  isEqual: @"Most Popular"]){
                 cell.onSwitch.on = [self.mostPopularStates[indexPath.row] boolValue];
                 return cell;
+            } else if ([self.categories[indexPath.section][@"name"]  isEqual: @"General Features"]) {
+                cell.onSwitch.on = [self.generalFeaturesStates[indexPath.row] boolValue];
+                return cell;
+            } else if ([self.categories[indexPath.section][@"name"]  isEqual: @"Categories"]) {
+                cell.onSwitch.on = [self.categoriesStates[indexPath.row] boolValue];
+                return cell;
             } else {
                 cell.onSwitch.on = [self.categories[indexPath.section][@"values"][indexPath.row] boolValue];
                 return cell;
             }
 
-            
         } else {
             UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
-            
             cell.textLabel.text = self.categories[indexPath.section][@"list"][indexPath.row];
-            cell.accessoryType = UITableViewCellAccessoryCheckmark;
+            
+            if ([self.categories[indexPath.section][@"name"]  isEqual: @"Distance"]){
+                if ([self.distanceStates[indexPath.row] boolValue]){
+                    
+                    cell.accessoryType = UITableViewCellAccessoryCheckmark;
+                }
+            } else if ([self.categories[indexPath.section][@"name"]  isEqual: @"Sort By"]){
+                if ([self.sortByStates[indexPath.row] boolValue]){
+                    cell.accessoryType = UITableViewCellAccessoryCheckmark;
+                }
+            }
+            
 
             return cell;
         }
@@ -212,13 +243,33 @@
     NSLog(@"section: %d", indexPath.section);
     
     if([self.categories[indexPath.section][@"name"]  isEqual: @"Distance"]){
-        self.distanceExpanded = !self.distanceExpanded;
+        if(!self.distanceExpanded){
+            self.distanceExpanded = YES;
+        }
+        
+        NSLog(@"Value in distance.states: %@", self.distanceStates[indexPath.row]);
+        
+        // Trying to reset the array each time. Doesn't seem to work properly though
+        // self.distanceStates = [NSMutableArray arrayWithObjects: @(NO), @(NO), @(NO), @(NO), @(NO), nil];
+        if ([self.distanceStates[indexPath.row] boolValue]){
+            self.distanceStates[indexPath.row] = @(NO);
+        } else {
+            self.distanceStates[indexPath.row] = @(YES);
+        }
+        
+        
+    } else if([self.categories[indexPath.section][@"name"]  isEqual: @"Sort By"]){
+        self.sortByExpanded = !self.sortByExpanded;
+        self.sortByStates[indexPath.row] = @(YES);
+        
     } else if ([self.categories[indexPath.section][@"name"]  isEqual: @"Sort By"]) {
         self.sortByExpanded = !self.sortByExpanded;
-    } else if ([self.categories[indexPath.section][@"name"]  isEqual: @"General Features"]) {
+    } else if ([self.categories[indexPath.section][@"name"]  isEqual: @"General Features"] && indexPath.row == 3 && !self.generalFeaturesExpanded) {
         self.generalFeaturesExpanded = !self.generalFeaturesExpanded;
+    } else if ([self.categories[indexPath.section][@"name"]  isEqual: @"Categories"] && indexPath.row == 3 && !self.categoriesExpanded) {
+        self.categoriesExpanded = !self.categoriesExpanded;
     }
-       
+    
     [self.tableView reloadData];
     
 }
@@ -237,7 +288,13 @@
 - (void)sender:(SwitchCell *)sender didChangeValue:(BOOL)value{
 
     NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
-    self.mostPopularStates[indexPath.row] = @(value);
+    if (indexPath.section == 1) {
+        self.mostPopularStates[indexPath.row] = @(value);
+    } else if (indexPath.section == 4) {
+        self.generalFeaturesStates[indexPath.row] = @(value);
+    } else if (indexPath.section == 5) {
+        self.categoriesStates[indexPath.row] = @(value);
+    }
 }
 
 

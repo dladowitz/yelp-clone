@@ -7,7 +7,6 @@
 //
 
 #import "MainViewController.h"
-#import "FilterViewController.h"
 #import "YelpClient.h"
 #import "YelpListing.h"
 #import "YelpListingCell.h"
@@ -68,6 +67,12 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
         self.searchBar.delegate = self;
         [self.searchBarView addSubview:self.searchBar];
         self.navigationItem.titleView = self.searchBarView;
+
+    // Delegate info
+        FilterViewController *filterViewController = [FilterViewController alloc];
+        filterViewController.delegate = self;
+//        [[self navigationController] pushViewController:filterViewController animated:YES];
+
     
     
     // Yelp API Settings
@@ -165,6 +170,7 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
 #pragma mark - Filter View Controller Delegate Methods
 - (void)adFiltersViewController:(FilterViewController *)controller didFinishSaving:(NSMutableArray *)filters
 {
+    //Not sure why the filters are not being passed from FilterViewController
     NSLog(@"This was returned from FilterViewController %@",filters);
 }
 
