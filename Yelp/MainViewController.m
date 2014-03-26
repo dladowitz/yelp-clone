@@ -24,7 +24,6 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
 @property (nonatomic, strong) UISearchBar *searchBar;
 @property (nonatomic, strong) UIView      *searchBarView;
 
-
 @end
 
 @implementation MainViewController
@@ -194,6 +193,17 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
     if (data[@"mostPopular"][0]) {
         [dictionary setObject:data[@"mostPopular"][0] forKey:@"deals_filter"];
     }
+    
+    if (data[@"distance"][0]) {
+        [dictionary setObject:@"100" forKey:@"radius_filter"];
+    } else if (data[@"distance"][1]) {
+        [dictionary setObject:@"500" forKey:@"radius_filter"];
+    } else if (data[@"distance"][2]) {
+        [dictionary setObject:@"1000" forKey:@"radius_filter"];
+    } else if (data[@"distance"][3]) {
+        [dictionary setObject:@"20000" forKey:@"radius_filter"];
+    }
+
     
         NSLog(@"dictionary, %@", dictionary);
    
