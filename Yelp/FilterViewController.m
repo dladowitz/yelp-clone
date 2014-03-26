@@ -26,6 +26,7 @@
 @property (nonatomic, assign) BOOL categoriesExpanded;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
+
 @end
 
 @implementation FilterViewController
@@ -48,19 +49,32 @@
         self.tableView.dataSource = self;
         self.tableView.delegate = self;
 
-
-    UINavigationBar *header = [[UINavigationBar alloc] initWithFrame:CGRectMake(0,0,320,45)];
-    UINavigationItem *buttonHold = [[UINavigationItem alloc]initWithTitle:@"Filter"];
+    UINavigationBar *headerView = [[UINavigationBar alloc] initWithFrame:CGRectMake(0,0,320,44)];
     
-    UIBarButtonItem *barSaveButton = [[UIBarButtonItem alloc] initWithTitle:@"Save" style:UIBarButtonItemStyleDone target:self action:@selector(saveFilter:)];
+    //The UINavigationItem is neede as a "box" that holds the Buttons or other elements
+    UINavigationItem *buttonCarrier = [[UINavigationItem alloc]initWithTitle:@"Filter"];
     
-
-    [buttonHold setRightBarButtonItem:barSaveButton];
+    //Creating some buttons:
+    UIBarButtonItem *barBackButton = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStyleDone target:self action:@selector(cancel)];
+    UIBarButtonItem *barSaveButton = [[UIBarButtonItem alloc] initWithTitle:@"Save" style:UIBarButtonItemStyleDone target:self action:@selector(saveFilters)];
     
-    NSArray *barItemArray = [[NSArray alloc]initWithObjects:buttonHold,nil];
+    //Putting the Buttons on the Carrier
+    [buttonCarrier setLeftBarButtonItem:barBackButton];
+    [buttonCarrier setRightBarButtonItem:barSaveButton];
     
-    [header setItems:barItemArray];
-    [self.tableView setTableHeaderView:header];
+    //The NavigationBar accepts those "Carrier" (UINavigationItem) inside an Array
+    NSArray *barItemArray = [[NSArray alloc]initWithObjects:buttonCarrier,nil];
+    
+    // Attaching the Array to the NavigationBar
+    [headerView setItems:barItemArray];
+    
+    // Adding the NavigationBar to the TableView
+    [self.tableView setTableHeaderView:headerView];
+    
+    [headerView setBarTintColor:[UIColor redColor]];
+    [headerView setTintColor:[UIColor whiteColor]];
+//    [headerView setTitleTextAttributes:@{NSForegroundColorAttributeName:UIColorFromRGB(0xFFFFFF)}];
+    
     
     
     // Registering Custom Cells
@@ -125,12 +139,12 @@
     nil];
     
     // Arrays for mutable values
-        self.mostPopularStates = [NSMutableArray arrayWithObjects: @(YES), @(NO), @(NO), @(NO), nil];
+        self.mostPopularStates = [NSMutableArray arrayWithObjects: @(NO), @(NO), @(NO), @(NO), nil];
         self.priceStates = [NSMutableArray arrayWithObjects: @(0), nil];
         self.distanceStates = [NSMutableArray arrayWithObjects: @(YES), @(NO), @(NO), @(NO), @(NO), nil];
         self.sortByStates = [NSMutableArray arrayWithObjects: @(YES), @(NO), @(NO), @(NO), nil];
-        self.generalFeaturesStates = [NSMutableArray arrayWithObjects: @(YES), @(NO), @(NO), @(NO), @(YES), @(NO), @(NO), @(NO), @(YES), @(NO), nil];
-        self.categoriesStates = [NSMutableArray arrayWithObjects: @(YES), @(NO), @(NO), @(NO), @(YES), @(NO), @(NO), nil];
+        self.generalFeaturesStates = [NSMutableArray arrayWithObjects: @(NO), @(NO), @(NO), @(NO), @(YES), @(NO), @(NO), @(NO), @(YES), @(NO), nil];
+        self.categoriesStates = [NSMutableArray arrayWithObjects: @(NO), @(NO), @(NO), @(NO), @(YES), @(NO), @(NO), nil];
 }
 
 
@@ -309,6 +323,7 @@
 }
 
 
+
 #pragma mark - FilterViewController Delegate Methods
 
 -(void)processFilterSettingsData:(NSMutableDictionary *)data {
@@ -319,13 +334,40 @@
 
 #pragma mark - Buttons
 
-- (void)saveFilter:(UIBarButtonItem *)button
-{
+- (void)saveFilters {
+    NSLog(@"Save Button Pressed");
+    NSMutableDictionary *filters = [[NSMutableDictionary alloc] init];
+    
+        [filters setObject:self.mostPopularStates forKey:@"mostPopular"];
+        [filters setObject:self.distanceStates forKey:@"distance"];
+        [filters setObject:self.sortByStates forKey:@"sortBy"];
+        [filters setObject:self.generalFeaturesStates forKey:@"generalFeaturesPopular"];
+        [filters setObject:self.categoriesStates forKey:@"categoriesPopular"];
+//    [filters setObject:[NSNumber numberWithInt:self.sortByCurrentIndex] forKey:@"sortByCurrentIndex"];
+//    [filters setObject:self.mostPopularSwitchStates forKey:@"mostPopularSwitchStates"];
+//    [filters setObject:self.categoriesSwitchStates forKey:@"categoriesSwitchStates"];
+//    [filters setObject:self.categories[5][@"values"] forKey:@"categories"];
+//    [filters setObject:self.categories[2][@"values"] forKey:@"distances"];
+    
+    
+    [self processFilterSettingsData:filters];
+    [self dismissViewControllerAnimated:YES completion:^{}];
+}
+
+
+//- (void)saveFilter:(UIBarButtonItem *)button
+//{
 //    NSMutableDictionary *filters = [[NSMutableDictionary alloc] init];
 //    
 //    [self filterSettings:filters];
 //    [self dismissViewControllerAnimated:YES completion:^{}];
 //    return;
+//}
+
+- (void)cancel
+{
+    [self dismissViewControllerAnimated:YES completion:^{}];
+    return;
 }
 
 - (void)didReceiveMemoryWarning

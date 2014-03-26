@@ -24,6 +24,7 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
 @property (nonatomic, strong) UISearchBar *searchBar;
 @property (nonatomic, strong) UIView      *searchBarView;
 
+
 @end
 
 @implementation MainViewController
@@ -58,21 +59,45 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
         self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"filter" style:UIBarButtonItemStylePlain target:self action:@selector(onFilterButton)];
 
         // Add Search Bar to Navigation Bar
-        self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(40.0, 0.0, 280.0, 44.0)];
-        self.searchBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-        self.searchBar.barTintColor = [UIColor redColor];
+//        self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(40.0, 0.0, 280.0, 44.0)];
+//        self.searchBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+//        self.searchBar.barTintColor = [UIColor redColor];
+//    
+//        self.searchBarView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 310.0, 44.0)];
+//        self.searchBarView.autoresizingMask = 0;
+//        self.searchBar.delegate = self;
+//        [self.searchBarView addSubview:self.searchBar];
+//        self.navigationItem.titleView = self.searchBarView;
     
-        self.searchBarView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 310.0, 44.0)];
-        self.searchBarView.autoresizingMask = 0;
-        self.searchBar.delegate = self;
-        [self.searchBarView addSubview:self.searchBar];
-        self.navigationItem.titleView = self.searchBarView;
-
-    // Delegate info
-        FilterViewController *filterViewController = [FilterViewController alloc];
-        filterViewController.delegate = self;
-//        [[self navigationController] pushViewController:filterViewController animated:YES];
-
+    UINavigationBar *headerView = [[UINavigationBar alloc] initWithFrame:CGRectMake(0,20,320,44)];
+    
+    //The UINavigationItem is neede as a "box" that holds the Buttons or other elements
+    UINavigationItem *buttonCarrier = [[UINavigationItem alloc]initWithTitle:@"Hmm"];
+    
+    //Creating some buttons:
+    UIBarButtonItem *barBackButton = [[UIBarButtonItem alloc] initWithTitle:@"Filter" style:UIBarButtonItemStyleDone target:self action:@selector(filter)];
+    
+    //Putting the Buttons on the Carrier
+    [buttonCarrier setLeftBarButtonItem:barBackButton];
+    
+    //The NavigationBar accepts those "Carrier" (UINavigationItem) inside an Array
+    NSArray *barItemArray = [[NSArray alloc]initWithObjects:buttonCarrier,nil];
+    
+    // Attaching the Array to the NavigationBar
+    [headerView setItems:barItemArray];
+    
+    // Adding the NavigationBar to the TableView
+    [self.tableView setTableHeaderView:headerView];
+    
+    [headerView setBarTintColor:[UIColor redColor]];
+    [headerView setTintColor:[UIColor whiteColor]];
+//    [headerView setTitleTextAttributes:@{NSForegroundColorAttributeName:UIColorFromRGB(0xFFFFFF)}];
+    
+    // Set search bar
+    self.searchBar = [[UISearchBar alloc] init];
+    self.searchBar.delegate = self;
+    
+    headerView.topItem.titleView = self.searchBar;
     
     
     // Yelp API Settings
@@ -166,10 +191,34 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
     
 }
 
+- (void)filter {
+    [self.searchBar resignFirstResponder];
+    FilterViewController *filterViewController = [[FilterViewController alloc] initWithNibName:NSStringFromClass([FilterViewController class]) bundle:nil];
+    filterViewController.delegate = self;
+    [self presentViewController:filterViewController animated:YES completion:^{}];
+    return;
+}
 
 #pragma mark - Filter View Controller Delegate Methods
 -(void)processFilterSettingsData:(NSMutableDictionary *)data {
-    NSLog(@"%@", data);
+    NSLog(@"Filters from view controller%@", data);
+    
+    NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
+    
+    if (data[@"mostPopular"][2]) {
+        [dictionary setObject:data[@"mostPopular"][2] forKey:@"deals_filter"];
+    }
+    
+        NSLog(@"dictionary, %@", dictionary);
+   
+    
+    [self.client searchWithDictionary:dictionary success:^(AFHTTPRequestOperation *operation, id response) {
+        // Passing API results to the YelpListing model for creation
+        self.yelpListings = [YelpListing yelpListingsWithArray:response[@"businesses"]];
+        [self.tableView reloadData];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"error: %@", [error description]);
+    }];
     
 }
 

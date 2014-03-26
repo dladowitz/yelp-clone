@@ -19,7 +19,13 @@
         self.ratingImgUrl    = dictionary[@"rating_img_url"];
         self.reviewCount     = dictionary[@"review_count"];
         self.streetAddress   = dictionary[@"location"][@"display_address"][0];
-        self.neighborhood    = dictionary[@"location"][@"display_address"][2];
+        
+        if(dictionary[@"location"][@"display_address"][2]){
+            self.neighborhood    = dictionary[@"location"][@"display_address"][2];
+        } else {
+            self.neighborhood = @"Secret Spot";
+        }
+
         self.listingImageUrl = dictionary[@"image_url"];
         self.category        = dictionary[@"categories"][0][0];
     }

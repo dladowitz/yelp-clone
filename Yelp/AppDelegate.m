@@ -18,16 +18,16 @@
     // Creates HomeViewController
     MainViewController *mainViewController = [[MainViewController alloc] init];
                                
-    // Creates Navigation Controller - I think we don't really needt his
-    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:mainViewController];
-
-    // Sets Nav Button Color for entire app (can move to individual controllers instead)
-    navigationController.navigationBar.tintColor = [UIColor whiteColor];
-    
-    navigationController.navigationBar.barTintColor = [UIColor redColor];
+//    // Creates Navigation Controller - I think we don't really needt his
+//    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:mainViewController];
+//
+//    // Sets Nav Button Color for entire app (can move to individual controllers instead)
+//    navigationController.navigationBar.tintColor = [UIColor whiteColor];
+//    
+//    navigationController.navigationBar.barTintColor = [UIColor redColor];
     
     // Sets the Root View Controller to the MainViewController
-    self.window.rootViewController = navigationController;
+    self.window.rootViewController = mainViewController;
     
     [self.window makeKeyAndVisible];
     return YES;
